@@ -227,11 +227,24 @@ def cc_toolchain_config(
             "-fobjc-link-runtime",
         ])
 
+        # (david) custom changes to expose important system libs. womp womp.
+        # TODO: clean these up if we ever find a way
+        link_flags.extend([
+            "-lxml2",
+            "-lcurl",
+            "-lm",
+            "-lsasl2",
+            "-lz",
+            "-ldl",
+            "-lpthread",
+        ])
+
         # Use the bundled libtool (llvm-libtool-darwin).
         use_libtool = True
     elif target_arch in ["wasm32", "wasm64"]:
         # lld is invoked as wasm-ld for WebAssembly targets.
         use_libtool = False
+
     else:
         link_flags.extend([
             "-Wl,--build-id=md5",
