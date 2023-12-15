@@ -252,6 +252,29 @@ def cc_toolchain_config(
             "-Wl,-z,relro,-z,now",
         ])
         use_libtool = False
+        # TODO: as above, so below
+        link_flags.extend([
+            "-lxml2",
+            "-lcurl",
+            "-lm",
+            "-lsasl2",
+            "-lz",
+            "-ldl",
+            "-lpthread",
+            "-lzstd",
+            "-llz4",
+            "-lcrypto",
+            # future fun!
+            # i had to chase down the `libssl1.1` package from an archive
+            # because libssl1.0 is missing several symbols we need, and the
+            # default libssl3 (for ubuntu 22+) is missing *one* symbol.
+            # so version 1.1 is the only library we can link against, and it's
+            # totally gone in ubuntu 22.
+            #
+            # bonus fun: our ubuntu 20 executor doesn't seem to explicitly
+            # install this anywhere-- it's just there by default.
+            "-l:libssl.so.1.1",
+        ])
 
     # Pre-installed libtool on macOS has -static as default, but llvm-libtool-darwin needs it
     # explicitly. cc_common.create_link_variables does not automatically add this either if
