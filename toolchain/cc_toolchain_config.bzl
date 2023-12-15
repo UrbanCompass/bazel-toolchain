@@ -180,6 +180,29 @@ def cc_toolchain_config(
             "-Wl,--hash-style=gnu",
             "-Wl,-z,relro,-z,now",
         ])
+        # TODO: as above, so below
+        link_flags.extend([
+            "-lxml2",
+            "-lcurl",
+            "-lm",
+            "-lsasl2",
+            "-lz",
+            "-ldl",
+            "-lpthread",
+            "-lzstd",
+            "-llz4",
+            "-lcrypto",
+            # future fun!
+            # i had to chase down the `libssl1.1` package from an archive
+            # because libssl1.0 is missing several symbols we need, and the
+            # default libssl3 (for ubuntu 22+) is missing *one* symbol.
+            # so version 1.1 is the only library we can link against, and it's
+            # totally gone in ubuntu 22.
+            #
+            # bonus fun: our ubuntu 20 executor doesn't seem to explicitly
+            # install this anywhere-- it's just there by default.
+            "-l:libssl.so.1.1",
+        ])
 
     # Flags related to C++ standard.
     # The linker has no way of knowing if there are C++ objects; so we
