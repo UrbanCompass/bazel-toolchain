@@ -179,6 +179,7 @@ def cc_toolchain_config(
             "-Wl,--build-id=md5",
             "-Wl,--hash-style=gnu",
             "-Wl,-z,relro,-z,now",
+            "-lgcc"
         ])
 
     # Flags related to C++ standard.
