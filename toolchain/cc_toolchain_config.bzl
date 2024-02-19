@@ -264,6 +264,7 @@ def cc_toolchain_config(
             "-lzstd",
             "-llz4",
             "-lcrypto",
+            "-lgcc"
             # future fun!
             # i had to chase down the `libssl1.1` package from an archive
             # because libssl1.0 is missing several symbols we need, and the
