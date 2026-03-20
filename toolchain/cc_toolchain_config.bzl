@@ -250,8 +250,10 @@ def cc_toolchain_config(
             "-Wl,--build-id=md5",
             "-Wl,--hash-style=gnu",
             "-Wl,-z,relro,-z,now",
+            "-lgcc",
         ])
         use_libtool = False
+        # TODO TODO i had deleted this with first pass of bzlmod... why?
         # TODO: as above, so below
         link_flags.extend([
             "-lxml2",
@@ -264,7 +266,6 @@ def cc_toolchain_config(
             "-lzstd",
             "-llz4",
             "-lcrypto",
-            "-lgcc"
             # future fun!
             # i had to chase down the `libssl1.1` package from an archive
             # because libssl1.0 is missing several symbols we need, and the
